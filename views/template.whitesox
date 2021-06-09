@@ -5,4 +5,8 @@
   <header>#message#</header>
   #h2#
   #content#
+  <p></p>
+  #disclaimer#
+  <p></p>
+  #link1#
 </body>
