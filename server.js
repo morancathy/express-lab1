@@ -27,11 +27,9 @@ app.engine('whitesox', (filePath, options, callback) => {
     return callback(null, rendered)
   })
 })
-// configure the app (app.set) for 1st template
+// configure the app (app.set)
 app.set('views', './views') // specify the views directory
 app.set('view engine', 'whitesox') // register the whitesox view engine
-
-// Mount middleware (app.use)   DO WE USE THIS IN THE HOMEWORK?
 
 // Mount routes
 app.get('/abreu', (req, res) => {
@@ -83,36 +81,33 @@ app.get('/standings', (req, res) => {
   link1: 'http://localhost:3000/abreu', link1Text: 'Return to Players' })
 })
 
-//#####################################I tried to add anchor tags using an array, but it didn't work. :(
-//                                    I just added them one by one, but there has to be a more concise way...
-// const players = ['/abreu', '/madrigal', '/moncada', '/anderson', '/vaughn', '/garcia', '/eaton', '/grandal', '/mercedes'];
-// for(let i = 0; i > players.length; i++){
-//   app.get(i, (req, res) => {
-//     res.render('template', {link1: 'http://localhost:3000/standings', link1Text: 'Standings'})
-//   })
-// }
-//################################################################################################################
-
+// Bonus Part
+//Function for 'next player' link
 const linkFunction = (player) =>{
   const players = ['/abreu', '/madrigal', '/moncada', '/anderson', '/vaughn', '/garcia', '/eaton', '/grandal', '/mercedes'];
-  console.log(players.length)
-
   let playerIndex = players.indexOf(player, 0);
-  let link = players[playerIndex+1];
-      // players.splice(9, 0, '/abreu')
-      //splice
-  return `http://localhost:3000${link}`
+
+  if(playerIndex === players.length-1){
+    let link = players[0];
+    return `http://localhost:3000${link}`
   }
 
+  let link = players[playerIndex+1];
+  return `http://localhost:3000${link}`
+}
+
+//Function for 'previous player' link
 const linkFunction2 = (player) =>{
   const players = ['/abreu', '/madrigal', '/moncada', '/anderson', '/vaughn', '/garcia', '/eaton', '/grandal', '/mercedes'];
-
   let playerIndex = players.indexOf(player, 0);
-  let link = players[playerIndex-1];
-      // players.splice(9, 0, '/abreu')
-      //splice
-  return `http://localhost:3000${link}`
+
+  if(playerIndex === 0){
+    let link = players[players.length-1];
+    return `http://localhost:3000${link}`
   }
+  let link = players[playerIndex-1];
+  return `http://localhost:3000${link}`
+}
 
 // Tell the app to listen on port 3000
 app.listen(3000, function() {
